@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AnyLLM", "AnyLLM.shproj", "{B4436C8F-BC43-492B-B683-438D7CEC600B}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C3DF52F-29A4-4C66-A463-C9EF1A5FCDE0}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		AnyLLM.projitems*{b4436c8f-bc43-492b-b683-438d7cec600b}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal
