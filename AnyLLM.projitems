@@ -9,5 +9,7 @@
     <Import_RootNamespace>AnyLLM</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AnythingllmClient.Core.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AnythingllmClient.cs" />
   </ItemGroup>
 </Project>
