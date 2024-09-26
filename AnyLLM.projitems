@@ -6,7 +6,7 @@
     <SharedGUID>b4436c8f-bc43-492b-b683-438d7cec600b</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>AnyLLM</Import_RootNamespace>
+    <Import_RootNamespace>Jiuyong.AnythingLLM</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AnythingllmClient.Core.cs" />
