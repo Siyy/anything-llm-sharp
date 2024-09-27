@@ -16,6 +16,23 @@ namespace Jiuyong.AnythingLLM
 
 	public partial class AnythingllmClient
 	{
+		// /v1/auth
+
+		/// <summary>
+		/// Verify the attached Authentication header contains a valid API token.
+		/// </summary>
+		/// <returns></returns>
+		public async Task<bool> DoAuthAsync()
+		{
+			var p = new
+			{
+				authenticated = true
+			};
+
+			var rp = await DoGetAsync("/v1/auth", p);
+			return rp.authenticated;
+		}
+
 
 		// /v1/workspace/{slug}/thread/{threadSlug}/chat
 		public async Task<string> DoChatAsync(string slug, string message, string threadSlug = null!)

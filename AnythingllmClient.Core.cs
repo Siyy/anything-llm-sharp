@@ -35,6 +35,54 @@ namespace Jiuyong.AnythingLLM
 			//_secretKey = secretKey;
 		}
 
+		private HttpClient InitClient()
+		{
+			HttpClient client = new();
+			client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue($"Bearer", _apiKey);
+			return client;
+		}
+
+		private string GetFullUri(string commandUri)
+		{
+			//return Path.Combine(_llmBaseUri, commandUri);
+			//严谨方法全部失败。
+			var r = _llmBaseUri + commandUri;
+			return r;
+		}
+
+		HttpClient InitRequest(string commandUri, out string fullUri)
+		{
+			string url = GetFullUri(commandUri);
+			fullUri = url;
+
+			var client = InitClient();
+			return client;
+		}
+
+		private static async Task<P> ParseResponse<P>(HttpResponseMessage response, P anserSample)
+		{
+			if (response.IsSuccessStatusCode)
+			{
+				var p_txt = await response.Content.ReadAsStringAsync();
+				var p = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(p_txt, anserSample);
+				return p ?? throw new Exception(p_txt);
+			}
+			else
+			{
+				throw new Exception($"请求失败，状态码: {response.StatusCode}，原因：“${response.ReasonPhrase}”。");
+			}
+		}
+
+		public async Task<P> DoGetAsync<P>(string commandUri, P anserSample)
+		{
+
+			using var client = InitRequest(commandUri, out string url);
+
+			var response = await client.GetAsync(url);
+
+			return await ParseResponse(response, anserSample);
+		}
+
 		public async Task<P> DoRequestAsync<Q, P>(string commandUri, P anserSample, Q message = default!, HttpMethod method = HttpMethod.Auto)
 		{
 			string url = Path.Combine(_llmBaseUri, commandUri);
