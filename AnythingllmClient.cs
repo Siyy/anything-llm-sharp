@@ -54,7 +54,7 @@ namespace Jiuyong.AnythingLLM
 				error = "null | text string of the failure mode."
 			};
 
-			var uri = String.IsNullOrWhiteSpace(threadSlug) ? $"v1/workspace/{slug}/chat" : $"v1/workspace/{slug}/thread/{threadSlug}/chat";
+			var uri = String.IsNullOrWhiteSpace(threadSlug) ? $"/v1/workspace/{slug}/chat" : $"/v1/workspace/{slug}/thread/{threadSlug}/chat";
 			var msg = new
 			{
 				message,

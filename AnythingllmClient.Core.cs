@@ -59,7 +59,7 @@ namespace Jiuyong.AnythingLLM
 			return client;
 		}
 
-		private static async Task<P> ParseResponse<P>(HttpResponseMessage response, P anserSample)
+		private static async Task<P> ParseResponseAsync<P>(HttpResponseMessage response, P anserSample)
 		{
 			if (response.IsSuccessStatusCode)
 			{
@@ -75,21 +75,15 @@ namespace Jiuyong.AnythingLLM
 
 		public async Task<P> DoGetAsync<P>(string commandUri, P anserSample)
 		{
-
 			using var client = InitRequest(commandUri, out string url);
-
 			var response = await client.GetAsync(url);
-
-			return await ParseResponse(response, anserSample);
+			return await ParseResponseAsync(response, anserSample);
 		}
 
 		public async Task<P> DoRequestAsync<Q, P>(string commandUri, P anserSample, Q message = default!, HttpMethod method = HttpMethod.Auto)
 		{
-			string url = Path.Combine(_llmBaseUri, commandUri);
-			using HttpClient client = new();
-			client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue($"Bearer", _apiKey);
-			//var hds = client.DefaultRequestHeaders;
-			//hds.Clear();
+
+			using var client = InitRequest(commandUri, out string url);
 
 			//var timestamp = (DateTimeOffset.Now.UtcTicks - TimeZero).ToString();
 			//var timestamp = DateTime.Now.GetUtcTimeTicks().ToString();
@@ -139,17 +133,8 @@ namespace Jiuyong.AnythingLLM
 					break;
 			}
 
-			if (response.IsSuccessStatusCode)
-			{
-				var p_txt = await response.Content.ReadAsStringAsync();
-				P? p;
-				p = Newtonsoft.Json.JsonConvert.DeserializeAnonymousType(p_txt, anserSample);
-				return p ?? throw new Exception(p_txt);
-			}
-			else
-			{
-				throw new Exception($"请求失败，状态码: {response.StatusCode}");
-			}
+			return await ParseResponseAsync(response, anserSample);
+
 		}
 
 	}
